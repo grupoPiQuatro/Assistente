@@ -82,6 +82,8 @@ else
         sudo apt-get update && sudo apt upgrade -y
         sudo apt install docker.io -y
         sleep 2
+        sudo systemctl start docker
+        sudo systemctl enable docker
         sudo gpasswd -a $USER docker
         # sudo newgrp docker
         echo docker instalado consucesso!!
