@@ -2,11 +2,14 @@
 PURPLE='0;35'
 NC='\033[0m' 
 VERSAO=11
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, serei seu assistente para instalação da aplicação!;"
-sleep 2
+shopt -s nocasematch
+
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, serei seu assistente para instalação da aplicação!"
+sleep 3
 
 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Iniciando instalação..."
 sleep 2
+
 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) verificando se o docker está instalado..."
 docker --version
 if  [ $? -eq 0 ]
@@ -51,34 +54,34 @@ then
                         fi
                 fi
         else
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando docker compose..."
-            sleep 2
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) atualizando pacotes da maquina..."
-            sleep 1
-            sudo apt-get update && sudo apt upgrade -y
-            sudo gpasswd -a $USER docker
-            # newgrp docker
-            sudo apt-get install ca-certificates curl gnupg
-            sudo apt-get install docker-compose-plugin
-            DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-            sudo mkdir -p $DOCKER_CONFIG/cli-plugins
-            sudo curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-            sudo chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) docker compose instalado"
-            docker compose version
-            sleep 2
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio do banco ..."
-            sleep 2
-            git clone https://github.com/grupoPiQuatro/ScriptDocker.git
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
-            cd ScriptDocker
-            sg docker -c '
-            docker compose up -d
-            '
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container do banco iniciado!!"
-            sleep 2
-            echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
-            cd ..
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando docker compose..."
+        sleep 2
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) atualizando pacotes da maquina..."
+        sleep 1
+        sudo apt-get update && sudo apt upgrade -y
+        sudo gpasswd -a $USER docker
+        # newgrp docker
+        sudo apt-get install ca-certificates curl gnupg
+        sudo apt-get install docker-compose-plugin
+        DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+        sudo mkdir -p $DOCKER_CONFIG/cli-plugins
+        sudo curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+        sudo chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) docker compose instalado"
+        docker compose version
+        sleep 2
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio do banco ..."
+        sleep 2
+        git clone https://github.com/grupoPiQuatro/ScriptDocker.git
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
+        cd ScriptDocker
+        sg docker -c '
+        docker compose up -d
+        '
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container do banco iniciado!!"
+        sleep 2
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
+        cd ..
         fi
 else
         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando o docker..."
@@ -117,8 +120,9 @@ else
         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
         cd ..
 fi
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o Java instalado...;"
 
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o Java instalado...;"
+sleep 2
 java -version
 if [ $? -eq 0 ];
 then
