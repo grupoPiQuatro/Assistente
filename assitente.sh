@@ -200,7 +200,8 @@ else
                         if [ $? -eq 0 ]
                         then
                                 sleep 2
-                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container banco de dados já iniciado"
+                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) containers já iniciados"
+                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) vejá os logs para verificar se está funcionando!"
                         else
                                 cd cd ScriptDocker
                                 if [ $? -eq 0 ]
@@ -208,6 +209,29 @@ else
                                         cd ScriptDocker
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                                         sleep 2
+
+                                        echo insira os dados cadastrais para login na aplicação!
+                                        login=""
+
+                                        while [[ -z "$login" ]]; do
+                                        read -p "Digite o login: " login
+                                        
+                                        if [[ -z "$login" ]]; then
+                                                echo "Login inválido. Por favor, tente novamente."
+                                        fi
+                                        done
+                                        export login=$login
+
+                                        senha=""
+
+                                        while [[ -z "$senha" ]]; do
+                                        read -p "Digite a senha: " senha
+                                        
+                                        if [[ -z "$senha" ]]; then
+                                                echo "Senha inválida. Por favor, tente novamente."
+                                        fi
+                                        done
+                                        export senha=$senha
                                         
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
                                         sudo docker build -t containerjar .
@@ -219,15 +243,42 @@ else
                                         sleep 2
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
                                         cd ..
+                                        sleep 2
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
                                 else
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) nenhum container de banco de dados encontrado."
                                         sleep 2
                                         sudo gpasswd -a $USER docker
                                         git clone https://github.com/grupoPiQuatro/ScriptDocker.git
                                         cd ScriptDocker
+
+                                        echo insira os dados cadastrais para login na aplicação!
+                                        login=""
+
+                                        while [[ -z "$login" ]]; do
+                                        read -p "Digite o login: " login
+                                        
+                                        if [[ -z "$login" ]]; then
+                                                echo "Login inválido. Por favor, tente novamente."
+                                        fi
+                                        done
+                                        echo $login
+
+                                        senha=""
+
+                                        while [[ -z "$senha" ]]; do
+                                        read -p "Digite a senha: " senha
+                                        
+                                        if [[ -z "$senha" ]]; then
+                                                echo "Senha inválida. Por favor, tente novamente."
+                                        fi
+                                        done
+                                        echo $senha
                                         
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                                         sleep 2
+                                        # sudo docker build --build-arg login=$login --build-arg senha=$senha -t containerjar .
                                         sudo docker build -t containerjar .
 
                                         sleep 2
@@ -239,6 +290,9 @@ else
                                         sleep 2
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
                                         cd ..
+                                        sleep 2
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
                                 fi
                         fi
                 else
@@ -262,6 +316,29 @@ else
                 sleep 2
                 git clone https://github.com/grupoPiQuatro/ScriptDocker.git
                 cd ScriptDocker
+
+                echo insira os dados cadastrais para login na aplicação!
+                login=""
+
+                while [[ -z "$login" ]]; do
+                read -p "Digite o login: " login
+                
+                if [[ -z "$login" ]]; then
+                        echo "Login inválido. Por favor, tente novamente."
+                fi
+                done
+                export login=$login
+
+                senha=""
+
+                while [[ -z "$senha" ]]; do
+                read -p "Digite a senha: " senha
+                
+                if [[ -z "$senha" ]]; then
+                        echo "Senha inválida. Por favor, tente novamente."
+                fi
+                done
+                export senha=$senha
                 
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                 sudo docker build -t containerjar .
@@ -275,6 +352,9 @@ else
                 sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
                 cd ..
+                sleep 2
+                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
+                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
                 fi
         else
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando o docker..."
@@ -289,6 +369,7 @@ else
                 sudo gpasswd -a $USER docker
                 # sudo newgrp docker
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) docker instalado consucesso!!"
+                sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando docker compose..."
                 sleep 2
                 sudo apt-get install ca-certificates curl gnupg
@@ -303,6 +384,29 @@ else
                 sleep 2
                 git clone https://github.com/grupoPiQuatro/ScriptDocker.git
                 cd ScriptDocker
+
+                echo insira os dados cadastrais para login na aplicação!
+                login=""
+
+                while [[ -z "$login" ]]; do
+                read -p "Digite o login: " login
+                
+                if [[ -z "$login" ]]; then
+                        echo "Login inválido. Por favor, tente novamente."
+                fi
+                done
+                export login=$login
+
+                senha=""
+
+                while [[ -z "$senha" ]]; do
+                read -p "Digite a senha: " senha
+                
+                if [[ -z "$senha" ]]; then
+                        echo "Senha inválida. Por favor, tente novamente."
+                fi
+                done
+                export senha=$senha
 
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                 sleep 2
