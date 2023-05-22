@@ -206,9 +206,7 @@ else
                                 cd cd ScriptDocker
                                 if [ $? -eq 0 ]
                                 then
-                                        cd ScriptDocker
-                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
-                                        sleep 2
+                                        cd ScriptDocker/app
 
                                         echo insira os dados cadastrais para login na aplicação!
                                         login=""
@@ -217,10 +215,9 @@ else
                                         read -p "Digite o login: " login
                                         
                                         if [[ -z "$login" ]]; then
-                                                echo "Login inválido. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
                                         fi
                                         done
-                                        export login=$login
 
                                         senha=""
 
@@ -228,13 +225,51 @@ else
                                         read -p "Digite a senha: " senha
                                         
                                         if [[ -z "$senha" ]]; then
-                                                echo "Senha inválida. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
                                         fi
                                         done
-                                        export senha=$senha
+
+                                        echo $login > my_env.txt
+                                        echo $senha >> my_env.txt
+
+                                        setor=""
+
+                                        while [[ -z "$setor" ]]; do
+                                        read -p "Digite o setor: " setor
+                                        
+                                        if [[ -z "$setor" ]]; then
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                                        fi
+                                        done
+
+                                        disco=""
+
+                                        while [[ -z "$disco" ]]; do
+                                        read -p "Digite o tipo de disco: " disco
+                                        
+                                        if [[ -z "$disco" ]]; then
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                                        fi
+                                        done
+
+                                        echo $setor > config.txt
+                                        echo $disco >> config.txt
+
+                                        unset $login
+                                        unset $senha
+                                        unset $setor
+                                        unset $disco
+
+                                        cd ..
+                                        
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
+                                        sleep 2
+
+                                        sudo docker build -t containerjar .
+                                        rm app/my_env.txt
+                                        rm app/config.txt
                                         
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
-                                        sudo docker build -t containerjar .
                                         sleep 2
                                         sg docker -c '
                                         docker compose up -d
@@ -251,7 +286,8 @@ else
                                         sleep 2
                                         sudo gpasswd -a $USER docker
                                         git clone https://github.com/grupoPiQuatro/ScriptDocker.git
-                                        cd ScriptDocker
+                                        
+                                        cd ScriptDocker/app
 
                                         echo insira os dados cadastrais para login na aplicação!
                                         login=""
@@ -260,10 +296,9 @@ else
                                         read -p "Digite o login: " login
                                         
                                         if [[ -z "$login" ]]; then
-                                                echo "Login inválido. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
                                         fi
                                         done
-                                        echo $login
 
                                         senha=""
 
@@ -271,15 +306,49 @@ else
                                         read -p "Digite a senha: " senha
                                         
                                         if [[ -z "$senha" ]]; then
-                                                echo "Senha inválida. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
                                         fi
                                         done
-                                        echo $senha
+
+                                        echo $login > my_env.txt
+                                        echo $senha >> my_env.txt
+
+                                        setor=""
+
+                                        while [[ -z "$setor" ]]; do
+                                        read -p "Digite o setor: " setor
                                         
+                                        if [[ -z "$setor" ]]; then
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                                        fi
+                                        done
+
+                                        disco=""
+
+                                        while [[ -z "$disco" ]]; do
+                                        read -p "Digite o tipo de disco: " disco
+                                        
+                                        if [[ -z "$disco" ]]; then
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                                        fi
+                                        done
+
+                                        echo $setor > config.txt
+                                        echo $disco >> config.txt
+
+                                        unset $login
+                                        unset $senha
+                                        unset $setor
+                                        unset $disco
+
+                                        cd ..
+
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                                         sleep 2
                                         # sudo docker build --build-arg login=$login --build-arg senha=$senha -t containerjar .
                                         sudo docker build -t containerjar .
+                                        rm app/my_env.txt
+                                        rm app/config.txt
 
                                         sleep 2
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
@@ -315,7 +384,8 @@ else
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio do banco ..."
                 sleep 2
                 git clone https://github.com/grupoPiQuatro/ScriptDocker.git
-                cd ScriptDocker
+                
+                cd ScriptDocker/app
 
                 echo insira os dados cadastrais para login na aplicação!
                 login=""
@@ -324,10 +394,9 @@ else
                 read -p "Digite o login: " login
                 
                 if [[ -z "$login" ]]; then
-                        echo "Login inválido. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
                 fi
                 done
-                export login=$login
 
                 senha=""
 
@@ -335,15 +404,49 @@ else
                 read -p "Digite a senha: " senha
                 
                 if [[ -z "$senha" ]]; then
-                        echo "Senha inválida. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
                 fi
                 done
-                export senha=$senha
+
+                echo $login > my_env.txt
+                echo $senha >> my_env.txt
+
+                setor=""
+
+                while [[ -z "$setor" ]]; do
+                read -p "Digite o setor: " setor
+                
+                if [[ -z "$setor" ]]; then
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                fi
+                done
+
+                disco=""
+
+                while [[ -z "$disco" ]]; do
+                read -p "Digite o tipo de disco: " disco
+                
+                if [[ -z "$disco" ]]; then
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                fi
+                done
+
+                echo $setor > config.txt
+                echo $disco >> config.txt
+
+                unset $login
+                unset $senha
+                unset $setor
+                unset $disco
+                
+                cd ..
                 
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                 sudo docker build -t containerjar .
-                sleep 2
+                rm app/my_env.txt
+                rm app/config.txt
 
+                sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
                 sg docker -c '
                 docker compose up -d
@@ -383,7 +486,8 @@ else
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio do banco..."
                 sleep 2
                 git clone https://github.com/grupoPiQuatro/ScriptDocker.git
-                cd ScriptDocker
+
+                cd ScriptDocker/app
 
                 echo insira os dados cadastrais para login na aplicação!
                 login=""
@@ -392,10 +496,9 @@ else
                 read -p "Digite o login: " login
                 
                 if [[ -z "$login" ]]; then
-                        echo "Login inválido. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
                 fi
                 done
-                export login=$login
 
                 senha=""
 
@@ -403,16 +506,50 @@ else
                 read -p "Digite a senha: " senha
                 
                 if [[ -z "$senha" ]]; then
-                        echo "Senha inválida. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
                 fi
                 done
-                export senha=$senha
+
+                echo $login > my_env.txt
+                echo $senha >> my_env.txt
+
+                setor=""
+
+                while [[ -z "$setor" ]]; do
+                read -p "Digite o setor: " setor
+                
+                if [[ -z "$setor" ]]; then
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                fi
+                done
+
+                disco=""
+
+                while [[ -z "$disco" ]]; do
+                read -p "Digite o tipo de disco: " disco
+                
+                if [[ -z "$disco" ]]; then
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                fi
+                done
+
+                echo $setor > config.txt
+                echo $disco >> config.txt
+
+                unset $login
+                unset $senha
+                unset $setor
+                unset $disco
+                
+                cd ..
 
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
                 sleep 2
                 sudo docker build -t containerjar .
-                sleep 2
+                rm app/my_env.txt
+                rm app/config.txt
 
+                sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
                 sg docker -c '
                 docker compose up -d
