@@ -36,7 +36,16 @@ then
                         if [ $? -eq 0 ]
                         then
                                 sleep 2
+                                sudo docker start containerBD
                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container banco de dados já iniciado"
+
+                                sudo docker ps | grep containerJar
+                                if [ $? -eq 0 ]
+                                then
+                                        sudo docker start containerBD
+                                        sudo docker exec -i ContainerJar bash -c "java-jar projeto-individual-java-jar-1.0-SNAPSHOT-jar-with-dependencies.jar"
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container da aplicação java iniciado"
+                                fi
                         else
                                 cd cd ScriptDocker
                                 if [ $? -eq 0 ]
@@ -207,48 +216,55 @@ else
                                 if [ $? -eq 0 ]
                                 then
                                         cd ScriptDocker/app
+                                        valida=""
+                                        while [[ -z "$valida" ]]; do
 
-                                        echo insira os dados cadastrais para login na aplicação!
-                                        login=""
+                                                echo insira os dados cadastrais para login na aplicação!
+                                                login=""
 
-                                        while [[ -z "$login" ]]; do
-                                        read -p "Digite o login: " login
-                                        
-                                        if [[ -z "$login" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
-                                        fi
-                                        done
+                                                while [[ -z "$login" ]]; do
+                                                read -p "Digite o login: " login
+                                                
+                                                if [[ -z "$login" ]]; then
+                                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Login inválido. Por favor, tente novamente.$(tput setaf 7)"
+                                                fi
+                                                done
 
-                                        senha=""
+                                                senha=""
 
-                                        while [[ -z "$senha" ]]; do
-                                        read -p "Digite a senha: " senha
-                                        
-                                        if [[ -z "$senha" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
-                                        fi
-                                        done
+                                                while [[ -z "$senha" ]]; do
+                                                read -p "Digite a senha: " senha
+                                                
+                                                if [[ -z "$senha" ]]; then
+                                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
+                                                fi
+                                                done
 
-                                        echo $login > my_env.txt
-                                        echo $senha >> my_env.txt
+                                                echo $login > my_env.txt
+                                                echo $senha >> my_env.txt
 
-                                        setor=""
+                                                setor=""
 
-                                        while [[ -z "$setor" ]]; do
-                                        read -p "Digite o setor: " setor
-                                        
-                                        if [[ -z "$setor" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
-                                        fi
-                                        done
+                                                while [[ -z "$setor" ]]; do
+                                                read -p "Digite o setor: " setor
+                                                
+                                                if [[ -z "$setor" ]]; then
+                                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Setor inválido. Por favor, tente novamente.$(tput setaf 7)"
+                                                fi
+                                                done
 
-                                        disco=""
+                                                disco=""
 
-                                        while [[ -z "$disco" ]]; do
-                                        read -p "Digite o tipo de disco: " disco
-                                        
-                                        if [[ -z "$disco" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                                                while [[ -z "$disco" ]]; do
+                                                read -p "Digite o tipo de disco: " disco
+                                                
+                                                if [[ -z "$disco" ]]; then
+                                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) disco inválida. Por favor, tente novamente.$(tput setaf 7)"
+                                                fi
+                                                done
+
+                                        if [[ -z "$valida" ]]; then
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) deseja prosseguir com os dados informados (S/N)"
                                         fi
                                         done
 
@@ -296,7 +312,7 @@ else
                                         read -p "Digite o login: " login
                                         
                                         if [[ -z "$login" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Login inválido. Por favor, tente novamente.$(tput setaf 7)"
                                         fi
                                         done
 
@@ -306,7 +322,7 @@ else
                                         read -p "Digite a senha: " senha
                                         
                                         if [[ -z "$senha" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
                                         fi
                                         done
 
@@ -319,7 +335,7 @@ else
                                         read -p "Digite o setor: " setor
                                         
                                         if [[ -z "$setor" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Setor inválido. Por favor, tente novamente.$(tput setaf 7)"
                                         fi
                                         done
 
@@ -329,7 +345,7 @@ else
                                         read -p "Digite o tipo de disco: " disco
                                         
                                         if [[ -z "$disco" ]]; then
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) disco inválida. Por favor, tente novamente.$(tput setaf 7)"
                                         fi
                                         done
 
@@ -394,7 +410,7 @@ else
                 read -p "Digite o login: " login
                 
                 if [[ -z "$login" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Login inválido. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -404,7 +420,7 @@ else
                 read -p "Digite a senha: " senha
                 
                 if [[ -z "$senha" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -417,7 +433,7 @@ else
                 read -p "Digite o setor: " setor
                 
                 if [[ -z "$setor" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Setor inválido. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -427,7 +443,7 @@ else
                 read -p "Digite o tipo de disco: " disco
                 
                 if [[ -z "$disco" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) disco inválida. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -490,13 +506,13 @@ else
                 cd ScriptDocker/app
 
                 echo insira os dados cadastrais para login na aplicação!
-                login=""
+                login="" # Variavel de ambiente
 
                 while [[ -z "$login" ]]; do
                 read -p "Digite o login: " login
                 
                 if [[ -z "$login" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Login inválido. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Login inválido. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -506,7 +522,7 @@ else
                 read -p "Digite a senha: " senha
                 
                 if [[ -z "$senha" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Senha inválida. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -519,7 +535,7 @@ else
                 read -p "Digite o setor: " setor
                 
                 if [[ -z "$setor" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Setor inválido. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) Setor inválido. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
@@ -529,7 +545,7 @@ else
                 read -p "Digite o tipo de disco: " disco
                 
                 if [[ -z "$disco" ]]; then
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) disco inválida. Por favor, tente novamente."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) disco inválida. Por favor, tente novamente.$(tput setaf 7)"
                 fi
                 done
 
