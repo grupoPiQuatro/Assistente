@@ -262,9 +262,17 @@ else
                                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 35) disco inválida. Por favor, tente novamente.$(tput setaf 7)"
                                                 fi
                                                 done
+                                                
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) deseja prosseguir com os dados informados (S/N)"
+                                                read inst
+                                                if [ \"$inst\" == \"S\" ] || [ \"$inst\" == \"s\" ]
+                                                then
+                                                        $valida=""
+                                                else
+                                                        $valida="Verified"
+                                                fi
 
                                         if [[ -z "$valida" ]]; then
-                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) deseja prosseguir com os dados informados (S/N)"
                                         fi
                                         done
 
