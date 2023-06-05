@@ -12,43 +12,37 @@ echo "/ /\/\ \| (_) || | | || || |_| (_) || |    / /\/\ \| || | | || (_| |"
 echo "\/    \/ \___/ |_| |_||_| \__|\___/ |_|    \/    \/|_||_| |_| \__,_|"
 echo "$(tput sgr0)"
 echo ""
-sleep 1
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, serei seu assistente para usar a aplicação!"
-sleep 3
 
-spinner=('|' '/' '-' '\')
 
-# loading() {
 loading() {
-count() {
-spin &
-pid=$!
+        spinner=('|' '/' '-' '\\')
+        count() {
+                spin &
+                pid=$!
 
-for i in `seq 1 3`
-do
-        sleep 1
-done
+                for i in `seq 1 2`
+                do
+                        sleep 1
+                done
 
-kill $pid
-echo -ne "\r   \r"  # Apaga a linha do spinner
-}
+                kill $pid
+                echo -ne "\r   \r"
+        }
 
-spin() {
-while true
-do
-        for i in "${spinner[@]}"
+        spin() {
+        while true
         do
-        echo -ne "\r$i"
-        sleep 0.2
+                for i in "${spinner[@]}"
+                do
+                echo -ne "\r$i"
+                sleep 0.2
+                done
         done
-done
-}
+        }
 
 count
 }
-
-#   count
-# }
+loading
 
 login-usuario(){
 valida=""
@@ -435,6 +429,10 @@ jar-cli-instalacao(){
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
         fi
 }
+
+sleep 1
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, serei seu assistente para usar a aplicação!"
+loading
 
 cd ~/Desktop
 if  [ $? -eq 0 ]
