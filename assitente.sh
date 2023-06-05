@@ -63,6 +63,7 @@ while [[ -z "$valida" ]]; do
 
         while [[ -z "$senha" ]]; do
         read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Digite a senha: " -s senha
+        echo ""
         
         if [[ -z "$senha" ]]; then
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
@@ -145,7 +146,7 @@ jar-cli-instalacao(){
                                                 login=""
 
                                                 while [[ -z "$login" ]]; do
-                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Digite o login: " login
+                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Digite o login: " login
                                                 
                                                 if [[ -z "$login" ]]; then
                                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Login inválido. Por favor, tente novamente.$(tput setaf 7)"
@@ -155,7 +156,8 @@ jar-cli-instalacao(){
                                                 senha=""
 
                                                 while [[ -z "$senha" ]]; do
-                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Digite a senha: " -s senha
+                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Digite a senha: " -s senha
+                                                echo ""
                                                 
                                                 if [[ -z "$senha" ]]; then
                                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
