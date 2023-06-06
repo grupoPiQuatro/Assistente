@@ -20,7 +20,7 @@ loading() {
                 spin &
                 pid=$!
 
-                for i in `seq 1 2`
+                for i in `seq 1 3`
                 do
                         sleep 1
                 done
