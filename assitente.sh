@@ -12,9 +12,37 @@ echo "/ /\/\ \| (_) || | | || || |_| (_) || |    / /\/\ \| || | | || (_| |"
 echo "\/    \/ \___/ |_| |_||_| \__|\___/ |_|    \/    \/|_||_| |_| \__,_|"
 echo "$(tput sgr0)"
 echo ""
-sleep 1
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, serei seu assistente para usar a aplicação!"
-sleep 3
+
+
+loading() {
+        spinner=('|' '/' '-' '\\')
+        count() {
+                spin &
+                pid=$!
+
+                for i in `seq 1 3`
+                do
+                        sleep 1
+                done
+
+                kill $pid
+                echo -ne "\r   \r"
+        }
+
+        spin() {
+        while true
+        do
+                for i in "${spinner[@]}"
+                do
+                echo -ne "\r$i"
+                sleep 0.2
+                done
+        done
+        }
+
+count
+}
+loading
 
 login-usuario(){
 valida=""
@@ -35,6 +63,7 @@ while [[ -z "$valida" ]]; do
 
         while [[ -z "$senha" ]]; do
         read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Digite a senha: " -s senha
+        echo ""
         
         if [[ -z "$senha" ]]; then
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
@@ -104,9 +133,9 @@ jar-cli-instalacao(){
                                 if [ $? -eq 0 ]
                                 then
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Iniciando versão para CLI" 
-                                        sleep 2
+                                        loading
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) containers já iniciados"
-                                        sleep 2
+                                        loading
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) logando no para iniciar captura"
 
                                         # Criar o arquivo de Login
@@ -117,7 +146,7 @@ jar-cli-instalacao(){
                                                 login=""
 
                                                 while [[ -z "$login" ]]; do
-                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Digite o login: " login
+                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Digite o login: " login
                                                 
                                                 if [[ -z "$login" ]]; then
                                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Login inválido. Por favor, tente novamente.$(tput setaf 7)"
@@ -127,7 +156,8 @@ jar-cli-instalacao(){
                                                 senha=""
 
                                                 while [[ -z "$senha" ]]; do
-                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Digite a senha: " -s senha
+                                                read -p "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Digite a senha: " -s senha
+                                                echo ""
                                                 
                                                 if [[ -z "$senha" ]]; then
                                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 1) Senha inválida. Por favor, tente novamente.$(tput setaf 7)"
@@ -151,7 +181,7 @@ jar-cli-instalacao(){
                                         fi
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Seguindo com os dados inseridos"
                                         done
-
+                                        loading
                                         unset $login
                                         unset $senha
 
@@ -161,10 +191,10 @@ jar-cli-instalacao(){
                                         rm my_env.txt
 
                                         sudo docker exec containerJar bash -c "java -jar projeto-individual-java-jar-1.0-SNAPSHOT-jar-with-dependencies.jar"
-                                        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Aplicação iniciada"
+                                        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
                                 else
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Iniciando versão para CLI" 
-                                        sleep 2
+                                        loading
                                         cd ScriptDocker
                                         if [ $? -eq 0 ]
                                         then
@@ -175,14 +205,14 @@ jar-cli-instalacao(){
                                                 cd ..
                                                 
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
-                                                sleep 2
+                                                loading
 
                                                 sudo docker build -t containerjar .
                                                 rm app/my_env.txt
                                                 rm app/config.txt
                                                 
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
-                                                sleep 2
+                                                loading
                                                 sg docker -c '
                                                 docker compose up -d
                                                 '
@@ -192,12 +222,12 @@ jar-cli-instalacao(){
                                                 cd ..
                                                 sleep 2
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
                                         else
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando versão para CLI..."
 
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) nenhum container encontrado."
-                                                sleep 2
+                                                loading
                                                 sudo gpasswd -a $USER docker
                                                 git clone https://github.com/grupoPiQuatro/ScriptDocker.git
                                                 
@@ -214,18 +244,19 @@ jar-cli-instalacao(){
                                                 rm app/my_env.txt
                                                 rm app/config.txt
 
-                                                sleep 2
+                                                loading
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
                                                 sg docker -c '
                                                 docker compose up -d
                                                 '
+                                                loading
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container do banco iniciado!!"
                                                 sleep 2
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
                                                 cd ..
                                                 sleep 2
                                                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
-                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
+                                                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
                                         fi
 
 
@@ -242,7 +273,7 @@ jar-cli-instalacao(){
                                         cd ..
                                         
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
-                                        sleep 2
+                                        loading
 
                                         sudo docker build -t containerjar .
                                         rm app/my_env.txt
@@ -259,7 +290,7 @@ jar-cli-instalacao(){
                                         cd ..
                                         sleep 2
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
-                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
                                 else
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) nenhum container encontrado."
                                         sleep 2
@@ -273,7 +304,9 @@ jar-cli-instalacao(){
                                         cd ..
 
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
-                                        sleep 2
+
+                                        loading
+                                        
                                         # sudo docker build --build-arg login=$login --build-arg senha=$senha -t containerjar .
                                         sudo docker build -t containerjar .
                                         rm app/my_env.txt
@@ -285,23 +318,26 @@ jar-cli-instalacao(){
                                         docker compose up -d
                                         '
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container do banco iniciado!!"
-                                        sleep 2
+                                        loading
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) tabelas criadas"
                                         cd ..
                                         sleep 2
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
-                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
+                                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
                                 fi
                         fi
                 else
                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando versão para CLI..."
                         
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando docker compose..."
-                        sleep 2
                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) atualizando pacotes da maquina..."
                         sleep 1
+
                         sudo apt-get update && sudo apt upgrade -y
                         sudo gpasswd -a $USER docker
+
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando docker compose..."
+                        loading
+
                         # newgrp docker
                         sudo apt-get install ca-certificates curl gnupg
                         sudo apt-get install docker-compose-plugin
@@ -312,8 +348,8 @@ jar-cli-instalacao(){
                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) docker compose instalado"
                         docker compose version
                         sleep 2
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio do banco ..."
-                        sleep 2
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio da aplicação..."
+                        loading
                         git clone https://github.com/grupoPiQuatro/ScriptDocker.git
                         
                         cd ScriptDocker/app
@@ -323,11 +359,11 @@ jar-cli-instalacao(){
                         cd ..
                         
                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
+                        loading
                         sudo docker build -t containerjar .
                         rm app/my_env.txt
                         rm app/config.txt
 
-                        sleep 2
                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
                         sg docker -c '
                         docker compose up -d
@@ -338,17 +374,17 @@ jar-cli-instalacao(){
                         cd ..
                         sleep 2
                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
-                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
+                        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
                 fi
         else
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando versão para CLI..."
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando o docker..."
-                sleep 2
+                loading
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) atualizando pacotes da maquina..."
                 sleep 1
                 sudo apt-get update && sudo apt upgrade -y
                 sudo apt install docker.io -y
-                sleep 2
+
                 sudo systemctl start docker
                 sudo systemctl enable docker
                 sudo gpasswd -a $USER docker
@@ -356,7 +392,7 @@ jar-cli-instalacao(){
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) docker instalado consucesso!!"
                 sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) instalando docker compose..."
-                sleep 2
+                loading
                 sudo apt-get install ca-certificates curl gnupg
                 sudo apt-get install docker-compose-plugin
                 DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
@@ -365,8 +401,8 @@ jar-cli-instalacao(){
                 sudo chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) docker compose instalado"
                 docker compose version
-                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio do banco..."
-                sleep 2
+                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) clonando repositorio da aplicação..."
+                loading
                 git clone https://github.com/grupoPiQuatro/ScriptDocker.git
 
                 cd ScriptDocker/app
@@ -376,13 +412,13 @@ jar-cli-instalacao(){
                 cd ..
 
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) criando imagem da aplicação......"
-                sleep 2
+                loading
                 sudo docker build -t containerjar .
                 rm app/my_env.txt
                 rm app/config.txt
 
-                sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) iniciando banco de dados..."
+                loading
                 sg docker -c '
                 docker compose up -d
                 '
@@ -392,17 +428,21 @@ jar-cli-instalacao(){
                 cd ..
                 sleep 2
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação concluida!"
-                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verifique se a aplicação está funcionando."
+                echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 4) Aplicação CLI iniciada. $(tput setaf 7)"
         fi
 }
+
+sleep 1
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, serei seu assistente para usar a aplicação!"
+loading
 
 cd ~/Desktop
 if  [ $? -eq 0 ]
 then
         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Identificado que você está em um pc com interface gráfica"
-        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Deseja instalar a versão com interface gráfica (S/N)? (caso contrario será instalada a versão CLI)"
+        echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Deseja utilizar a versão com interface gráfica (S/N)? (caso contrario será utilizada a versão CLI)"
         read inst
-        if [ \"$inst\" == \"S\" ]
+        if [ \"$inst\" == \"S\" ] || [ \"$inst\" == \"s\" ]
         then
 
                 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando versão para Desktop..."
@@ -551,7 +591,7 @@ then
                         echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Não foi identificado nenhuma versão do Java instalado"
                         echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Você deseja instalar o Java (S/N)?"
                         read inst
-                        if [ \"$inst\" == \"S\" ]
+                        if [ \"$inst\" == \"S\" ] || [ \"$inst\" == \"s\" ]
                         then
                                 echo "Instalando o Java!"
                                 sleep 2
