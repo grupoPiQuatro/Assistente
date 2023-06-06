@@ -458,7 +458,7 @@ then
                                 sudo docker ps | grep containerBD
                                 if [ $? -eq 0 ]
                                 then
-                                        sleep 2
+                                        loading
                                         sudo docker start containerBD
                                         echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) container banco de dados já iniciado"
 
@@ -581,8 +581,14 @@ then
                         cd Java-Jar
                         if [ $? -eq 0 ];
                         then
+                                echo iniciando a aplicação...
+                                loading
+                                loading
                                 java -jar login-screen-1.0-SNAPSHOT-jar-with-dependencies.jar
                         else
+                                echo iniciando a aplicação...
+                                loading
+                                loading
                                 git clone https://github.com/grupoPiQuatro/Java-Jar.git
                                 cd Java-Jar
                                 java -jar login-screen-1.0-SNAPSHOT-jar-with-dependencies.jar
@@ -602,8 +608,14 @@ then
                                 cd Java-Jar
                                 if [ $? -eq 0 ];
                                 then
+                                        echo iniciando a aplicação...
+                                        loading
+                                        loading
                                         java -jar login-screen-1.0-SNAPSHOT-jar-with-dependencies.jar
                                 else
+                                        echo iniciando a aplicação...
+                                        loading
+                                        loading
                                         git clone https://github.com/grupoPiQuatro/Java-Jar.git
                                         cd Java-Jar
                                         java -jar login-screen-1.0-SNAPSHOT-jar-with-dependencies.jar
